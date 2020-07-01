@@ -10,7 +10,8 @@
     "dev": "rollup -c -w",
     "debug": "ROLLUP_DEBUG=true rollup -c",
     "build": "rollup -c",
-    "lint": "eslint src/ --ext .js,.ts"
+    "lint": "eslint src --ext .js,.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@nestjs/common": "^7.2.0",
@@ -41,14 +42,11 @@
     "typescript": "^3.9.5"
   },
   "lint-staged": {
-    "**/*.ts?(x)": [
-      "tsc --noEmit",
-      "npm run lint -- --fix"
-    ]
+    "src/**/*.ts": "npm run lint -- --fix"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run typecheck && lint-staged"
     }
   },
   "engines": {
