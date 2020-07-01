@@ -2,7 +2,7 @@ import { TaskListEntity } from 'domains/entities/task-list.entity'
 import { TaskEntity } from 'domains/entities/task.entity'
 import { TaskOrmEntity } from './task.orm-entity'
 
-export class TasksMapper {
+export class TaskListMapper {
   static mapToDomain(taskList: TaskOrmEntity[]) {
     const taskListEntity = new TaskListEntity()
 
