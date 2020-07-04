@@ -1,3 +1,4 @@
+import replace from '@rollup/plugin-replace'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import run from '@rollup/plugin-run'
@@ -7,6 +8,7 @@ import builtins from 'builtin-modules'
 
 import pkg from './package.json'
 
+const env = process.env.NODE_ENV
 const isDev = process.env.ROLLUP_WATCH === 'true'
 const isDebug = process.env.ROLLUP_DEBUG === 'true'
 
@@ -21,6 +23,13 @@ export default {
     include: 'src/**',
   },
   plugins: [
+    replace({
+      process: JSON.stringify({
+        env: {
+          NODE_ENV: env || (isDev || isDebug ? 'development' : 'production'),
+        },
+      }),
+    }),
     resolve({ jsnext: true, preferBuiltins: true }),
     commonjs({ extensions: ['.js', '.ts'] }),
     typescript(),

@@ -4,6 +4,7 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm'
 
 import config from 'config/env.config'
 import dbConfig from 'config/db.config'
+import { LoggerModule } from 'modules/logger/logger.module'
 import { TaskListModule } from 'modules/task-list/task-list.module'
 
 @Module({
@@ -13,6 +14,7 @@ import { TaskListModule } from 'modules/task-list/task-list.module'
       load: [config],
     }),
     TypeOrmModule.forRoot(<TypeOrmModuleOptions>dbConfig),
+    LoggerModule,
     TaskListModule,
   ],
 })

@@ -4,17 +4,22 @@ import { ConfigService } from '@nestjs/config'
 
 import { AppModule } from 'app.module'
 import corsOptions from 'config/cors.config'
+import { LoggerService } from 'modules/logger/logger.service'
 
 const bootstrap = async () => {
   const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule, new FastifyAdapter(),
+    AppModule, new FastifyAdapter(), { logger: false },
   )
   const config = app.get(ConfigService)
-  const port = config.get<number>('port')
+  const port = config.get<number>('port')!
+  const logger = app.get(LoggerService)
 
+  app.useLogger(logger)
   app.enableCors(corsOptions)
 
-  await app.listen(port!)
+  await app.listen(port)
+
+  logger.log(`Server listening on port ${port}`)
 }
 
 bootstrap()
