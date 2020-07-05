@@ -1,9 +1,9 @@
 import { TaskListEntity } from 'domains/entities/task-list.entity'
 import { TaskEntity } from 'domains/entities/task.entity'
-import { TaskOrmEntity } from './task.orm-entity'
+import { TaskOrmDto } from 'dto/task/task.orm-dto'
 
 export class TaskListMapper {
-  static mapToDomain(taskList: TaskOrmEntity[]) {
+  static mapOrmToDomain(taskList: TaskOrmDto[]): TaskListEntity {
     const taskListEntity = new TaskListEntity()
 
     taskList.forEach(({

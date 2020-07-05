@@ -1,12 +1,12 @@
 export type TaskId = string
-export type TaskName = string
+export type TaskTitle = string
 export type TaskTimestamp = Date
 export type TaskText = string
 
 export class TaskEntity {
   constructor(
     private readonly _id: TaskId,
-    private readonly _title: TaskName,
+    private readonly _title: TaskTitle,
     private readonly _timestamp: TaskTimestamp,
     private readonly _text: TaskText,
   ) {}
@@ -15,7 +15,7 @@ export class TaskEntity {
     return this._id
   }
 
-  get title(): TaskName {
+  get title(): TaskTitle {
     return this._title
   }
 

@@ -42,5 +42,13 @@
         "tsx": "never"
       }
    ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.*?(-)dto.ts"],
+      "rules": {
+        "max-classes-per-file": "off"
+      }
+    }
+  ]
 }
