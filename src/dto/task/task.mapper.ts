@@ -1,10 +1,10 @@
 import { TaskEntity } from 'domains/entities/task.entity'
 import { UserId } from 'domains/entities/user.entity'
-import { TaskValidationDto } from './task.validation-dto'
+import { TaskApiDto } from './task.api-dto'
 import { TaskOrmDto } from './task.orm-dto'
 
 export class TaskMapper {
-  static mapValidationToDomain(task: TaskValidationDto): TaskEntity {
+  static mapApiToDomain(task: TaskApiDto): TaskEntity {
     const {
       id, title, timestamp, text,
     } = task

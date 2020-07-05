@@ -1,6 +1,7 @@
 import {
   Controller, Inject, Post, Body,
 } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 
 import { GetTaskListQuery } from 'domains/ports/inbound/get-task-list.query'
 import { TaskEntity } from 'domains/entities/task.entity'
@@ -9,8 +10,10 @@ import { AddTaskCommand } from 'domains/ports/inbound/add-task.command'
 import { RemoveTaskCommand } from 'domains/ports/inbound/remove-task.command'
 import { RemoveTaskUseCase } from 'domains/ports/inbound/remove-task.use-case'
 import { TaskMapper } from 'dto/task/task.mapper'
-import { GetTaskListValidationDto, AddTaskValidationDto, RemoveTaskValidationDto } from './task-list.validation-dto'
+import { TaskApiDto } from 'dto/task/task.api-dto'
+import { GetTaskListApiDto, AddTaskApiDto, RemoveTaskApiDto } from './task-list.api-dto'
 
+@ApiTags('tasks')
 @Controller('tasks')
 export class TaskListController {
   constructor(
@@ -19,21 +22,29 @@ export class TaskListController {
     @Inject(RemoveTaskUseCase) private readonly _removeTaskService: RemoveTaskUseCase,
   ) {}
 
+  @ApiOperation({ summary: 'Get user task list' })
+  @ApiResponse({
+    status: 201,
+    description: 'The found task list',
+    type: [TaskApiDto],
+  })
   @Post()
-  async getTaskList(@Body() { userId }: GetTaskListValidationDto): Promise<TaskEntity[]> {
+  async getTaskList(@Body() { userId }: GetTaskListApiDto): Promise<TaskEntity[]> {
     const taskList = await this._getTaskListService.getTaskList(userId)
     return taskList.tasks
   }
 
+  @ApiOperation({ summary: 'Add task to user' })
   @Post('add')
-  addTask(@Body() { userId, task }: AddTaskValidationDto): Promise<void> {
-    const taskEntity = TaskMapper.mapValidationToDomain(task)
+  addTask(@Body() { userId, task }: AddTaskApiDto): Promise<void> {
+    const taskEntity = TaskMapper.mapApiToDomain(task)
     const addTaskCommand = new AddTaskCommand(userId, taskEntity)
     return this._addTaskService.addTask(addTaskCommand)
   }
 
+  @ApiOperation({ summary: 'Remove user task' })
   @Post('remove')
-  removeTask(@Body() { userId, taskId }: RemoveTaskValidationDto): Promise<void> {
+  removeTask(@Body() { userId, taskId }: RemoveTaskApiDto): Promise<void> {
     const removeTaskCommand = new RemoveTaskCommand(userId, taskId)
     return this._removeTaskService.removeTask(removeTaskCommand)
   }
