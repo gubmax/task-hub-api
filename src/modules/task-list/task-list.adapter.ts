@@ -29,7 +29,7 @@ export class TaskListAdapter implements GetTaskListPort, AddTaskPort, RemoveTask
     this._taskRepository.save(newTask)
   }
 
-  async removeTask(userId: UserId, taskId: TaskId): Promise<void> {
-    this._taskRepository.delete({ userId, taskId })
+  async removeTask(taskId: TaskId): Promise<void> {
+    this._taskRepository.delete({ taskId })
   }
 }

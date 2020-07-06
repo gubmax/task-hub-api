@@ -1,5 +1,5 @@
 import {
-  Controller, Inject, Post, Body,
+  Controller, Inject, Post, Body, Get, Param, Delete,
 } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 
@@ -24,18 +24,18 @@ export class TaskListController {
 
   @ApiOperation({ summary: 'Get user task list' })
   @ApiResponse({
-    status: 201,
+    status: 200,
     description: 'The found task list',
     type: [TaskApiDto],
   })
-  @Post()
-  async getTaskList(@Body() { userId }: GetTaskListApiDto): Promise<TaskEntity[]> {
+  @Get(':userId')
+  async getTaskList(@Param() { userId }: GetTaskListApiDto): Promise<TaskEntity[]> {
     const taskList = await this._getTaskListService.getTaskList(userId)
     return taskList.tasks
   }
 
   @ApiOperation({ summary: 'Add task to user' })
-  @Post('add')
+  @Post()
   addTask(@Body() { userId, task }: AddTaskApiDto): Promise<void> {
     const taskEntity = TaskMapper.mapApiToDomain(task)
     const addTaskCommand = new AddTaskCommand(userId, taskEntity)
@@ -43,9 +43,9 @@ export class TaskListController {
   }
 
   @ApiOperation({ summary: 'Remove user task' })
-  @Post('remove')
-  removeTask(@Body() { userId, taskId }: RemoveTaskApiDto): Promise<void> {
-    const removeTaskCommand = new RemoveTaskCommand(userId, taskId)
+  @Delete(':taskId')
+  removeTask(@Param() { taskId }: RemoveTaskApiDto): Promise<void> {
+    const removeTaskCommand = new RemoveTaskCommand(taskId)
     return this._removeTaskService.removeTask(removeTaskCommand)
   }
 }

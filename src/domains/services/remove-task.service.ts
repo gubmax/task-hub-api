@@ -8,7 +8,6 @@ export class RemoveTaskService implements RemoveTaskUseCase {
   ) {}
 
   async removeTask(command: RemoveTaskCommand) {
-    const { userId, taskId } = command
-    this._removeTaskPort.removeTask(userId, taskId)
+    this._removeTaskPort.removeTask(command.taskId)
   }
 }

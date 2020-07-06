@@ -28,10 +28,6 @@ export class AddTaskApiDto {
 }
 
 export class RemoveTaskApiDto {
-  @ApiProperty(userApiProperty)
-  @IsNotEmpty()
-  userId: UserId
-
   @ApiProperty(taskIdApiProperty)
   @IsNotEmpty()
   taskId: TaskId
