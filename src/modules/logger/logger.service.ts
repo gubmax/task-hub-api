@@ -2,6 +2,7 @@ import pino, { Logger, LoggerOptions } from 'pino'
 
 import { LoggerService as NestLoggerService, Inject } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { Exception } from 'domains/exceptions/exception'
 
 export class LoggerService implements NestLoggerService {
   protected readonly _logger: Logger
@@ -22,8 +23,8 @@ export class LoggerService implements NestLoggerService {
     this._logger.info(message)
   }
 
-  error(error: Error) {
-    this._logger.error(error)
+  error(error: Exception) {
+    this._logger.error(error, error.cause)
   }
 
   warn(message: string) {

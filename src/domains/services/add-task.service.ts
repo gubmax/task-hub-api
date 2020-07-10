@@ -9,6 +9,6 @@ export class AddTaskService implements AddTaskUseCase {
 
   async addTask(command: AddTaskCommand) {
     const { userId, task } = command
-    this._addTaskPort.addTask(userId, task)
+    return this._addTaskPort.addTask(userId, task)
   }
 }

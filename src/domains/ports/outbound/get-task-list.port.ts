@@ -1,6 +1,7 @@
 import { UserId } from 'domains/entities/user.entity'
-import { TaskListEntity } from 'domains/entities/task-list.entity'
+import { TaskEntity } from 'domains/entities/task.entity'
+import { AsyncEither } from 'types/async-either'
 
 export interface GetTaskListPort {
-  getTaskList(userId: UserId): Promise<TaskListEntity>
+  getTaskList(userId: UserId): AsyncEither<TaskEntity[]>
 }

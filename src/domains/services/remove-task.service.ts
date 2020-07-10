@@ -8,6 +8,6 @@ export class RemoveTaskService implements RemoveTaskUseCase {
   ) {}
 
   async removeTask(command: RemoveTaskCommand) {
-    this._removeTaskPort.removeTask(command.taskId)
+    return this._removeTaskPort.removeTask(command.taskId)
   }
 }
