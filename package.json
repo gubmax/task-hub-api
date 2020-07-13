@@ -1,7 +1,7 @@
 {
   "name": "tusk-hub-api",
   "version": "0.1.0",
-  "description": "",
+  "description": "API for TaskHub application",
   "private": true,
   "license": "MIT",
   "author": "Maksim Gubyshev <gubyshev@gmail.com> (https://github.com/gubmax)",
